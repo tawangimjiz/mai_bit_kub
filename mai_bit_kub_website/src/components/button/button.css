@@ -1,0 +1,23 @@
+button{
+    width: 271px;
+    height: 78px;
+    border-radius: 39px;
+    background-color: #EA5B6F;
+    font-size: 40px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    border-color: #EA5B6F;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background-color: #ff6b7f;
+    box-shadow: 0 6px 25px rgba(234, 91, 111, 0.5);
+}
+
+button:active {
+    transform: scale(0.98);
+}

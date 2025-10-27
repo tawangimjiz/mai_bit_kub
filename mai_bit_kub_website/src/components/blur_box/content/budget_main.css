@@ -1,0 +1,192 @@
+.budget {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.budget img {
+  width: 100px;
+}
+
+.amount-container {
+  display: flex;
+  margin-top: 15px;
+  background-color: rgba(255, 251, 222, 0.55);
+  backdrop-filter: blur(30px);
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  padding: 0px;
+  gap: 2px;
+  position: relative;
+}
+
+/* gap color */
+.amount-container::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #EA5B6F;
+  transition: background-color 0.2s ease;
+  z-index: 1;
+}
+
+/* gap when disabled */
+.amount-container.disabled::before {
+  background-color: rgba(255, 251, 222, 0.65);
+}
+
+.budget-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.budget-min,
+.budget-max {
+  width: 154px;
+  height: 50px;
+  border: none;
+  text-align: center;
+  padding: 0 30px;
+  font-size: 24px;
+  font-weight: bold;
+  outline: none;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.currency {
+  position: absolute;
+  right: 10px;
+  font-size: 24px;
+  color: #EA5B6F;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.budget-wrapper input:focus + .currency,
+.budget-wrapper input:not(:placeholder-shown) + .currency {
+  opacity: 1;
+}
+
+.budget-wrapper input:hover::placeholder {
+  color: #FFFBDE;
+}
+
+.budget-min:hover,
+.budget-max:hover {
+  background-color: #EA5B6F;
+  color: white;
+}
+
+.budget-min {
+  border-radius: 30px 0 0 30px;
+}
+
+.budget-max {
+  border-radius: 0 30px 30px 0;
+}
+
+.budget-min::placeholder,
+.budget-max::placeholder {
+  color: #aaa;
+}
+
+.budget-min:focus::placeholder,
+.budget-max:focus::placeholder {
+  color: transparent;
+}
+
+.budget-min::-webkit-inner-spin-button,
+.budget-min::-webkit-outer-spin-button,
+.budget-max::-webkit-inner-spin-button,
+.budget-max::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.budget-min[type=number],
+.budget-max[type=number] {
+  -moz-appearance: textfield;
+}
+
+.save-btn {
+  /* keep a consistent 10px gap from the inputs/notice above */
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: 2px solid #EA5B6F;
+  background-color: #EA5B6F;
+  color: white;
+  font-size: 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  width: 160px;
+  height: 64px;
+}
+
+.save-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.save-btn:disabled {
+  background-color: rgba(234, 91, 111, 0.2);
+  border: 2px solid #EA5B6F;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.budget-min:disabled,
+.budget-max:disabled {
+  background-color: #EA5B6F;
+  color: white;
+  cursor: not-allowed;
+}
+
+.budget-min:disabled::placeholder,
+.budget-max:disabled::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.budget-min:disabled + .currency,
+.budget-max:disabled + .currency {
+  color: white;
+  opacity: 1;
+}
+
+.budget-min:disabled:hover,
+.budget-max:disabled:hover {
+  background-color: #EA5B6F;
+}
+
+.budget-wrapper input:hover + .currency {
+  color: white; /* เปลี่ยนสีเป็นขาวเมื่อ hover */
+}
+.notice{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 12px; /* small gap from the right edge */
+  /* ensure notice doesn't add extra vertical spacing
+     so the button's margin-top determines the gap */
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.notice span{
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+}

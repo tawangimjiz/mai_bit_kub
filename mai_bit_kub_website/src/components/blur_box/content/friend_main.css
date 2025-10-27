@@ -1,0 +1,116 @@
+.profile_friend {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+.group-name-display {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.members-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    padding-top: 80px;
+    box-sizing: border-box;
+}
+
+.member-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+}
+
+.member-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    object-fit: cover;
+}
+
+.member-profile-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #EA5B6F;
+    transition: transform 0.3s ease;
+}
+
+.member-avatar-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #EA5B6F, #F76B8A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 2px solid #EA5B6F;
+    transition: transform 0.3s ease;
+}
+
+.member-avatar-placeholder:hover {
+    transform: scale(1.1);
+}
+
+.member-item img:hover,
+.member-profile-image:hover {
+    transform: scale(1.1);
+}
+
+.member-name {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    max-width: 100px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.no-group-selected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.7;
+}
+
+.no-group-selected img {
+    width: 80px;
+    height: 80px;
+}
+
+.no-group-selected .member-name {
+    font-size: 1.1rem;
+    max-width: 200px;
+    white-space: normal;
+    color: rgba(255, 255, 255, 0.8);
+}

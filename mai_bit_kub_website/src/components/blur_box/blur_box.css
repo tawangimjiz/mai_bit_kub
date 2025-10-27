@@ -1,0 +1,56 @@
+/* .blur_box{
+    width: calc((70vw / var(--width)) - (21px / var(--width)));
+    height: calc((100vh / var(--height)) - 80px - (21px / var(--height)));
+    background-color: rgba(234, 91, 111, 0.16);
+    border-radius: 24px;
+    cursor: pointer;
+    backdrop-filter: blur(16px);
+    transition: background-color 0.5s, transform 0.5s;
+    transform-origin: center;
+    overflow-y: auto;
+}
+
+.blur_box:hover{
+    background-color: rgba(234, 91, 111, 0.50);
+    transform: scale(1.1);
+} */
+
+.blur_box {
+    width: calc((70vw / var(--width)) - (21px / var(--width)));
+    height: calc((100vh / var(--height)) - 80px - (21px / var(--height)));
+    background-color: rgba(234, 91, 111, 0.16);
+    border-radius: 24px;
+    cursor: pointer;
+    backdrop-filter: blur(16px);
+    transition: background-color 0.5s, transform 0.5s;
+    transform-origin: center;
+    overflow-y: auto;           /* ✅ ให้ scroll ได้เมื่อเนื้อหาเกิน */
+    overflow-x: hidden;         /* ✅ ไม่ให้ scroll ซ้ายขวา */
+    scrollbar-width: thin;      /* ✅ สำหรับ Firefox */
+    scrollbar-color: #ea5b6f80 #ffffff20;
+}
+
+.blur_box:hover {
+    background-color: rgba(234, 91, 111, 0.50);
+    transform: scale(1.025);
+}
+
+/* ✅ สำหรับ Chrome, Edge, Safari */
+.blur_box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.blur_box::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.15); /* พื้นหลังจาง */
+    border-radius: 10px;
+}
+
+.blur_box::-webkit-scrollbar-thumb {
+    background: rgba(234, 91, 111, 0.5);  /* สี scrollbar */
+    border-radius: 10px;
+    transition: background 0.3s;
+}
+
+.blur_box::-webkit-scrollbar-thumb:hover {
+    background: rgba(234, 91, 111, 0.8);  /* เข้มขึ้นตอน hover */
+}

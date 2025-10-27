@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model activity {
+  activity_id        Int                  @id @default(autoincrement())
+  activity_name      String
+  max_cost           Float
+  min_cost           Float
+  category           String
+  useractivity       useractivity[]
+  scheduled_activity scheduled_activity[]
+}
+
+model availability {
+  availability_id Int      @id @default(autoincrement())
+  start_datetime  DateTime
+  end_datetime    DateTime
+  note            String?
+  user_id         Int
+  group_id        Int
+  group           group    @relation(fields: [group_id], references: [group_id], map: "Availability_group_id_fkey")
+  user            user     @relation(fields: [user_id], references: [user_id], map: "Availability_user_id_fkey")
+
+  @@index([group_id], map: "Availability_group_id_fkey")
+  @@index([user_id], map: "Availability_user_id_fkey")
+}
+
+model budget {
+  budget_id  Int   @id @default(autoincrement())
+  user_id    Int
+  max_budget Float
+  min_budget Float
+  user       user  @relation(fields: [user_id], references: [user_id], map: "Budget_user_id_fkey")
+
+  @@index([user_id], map: "Budget_user_id_fkey")
+}
+
+model friendship {
+  user_id                         Int
+  friend_id                       Int
+  status                          String
+  requested_at                    DateTime  @default(now())
+  responded_at                    DateTime?
+  user_friendship_friend_idTouser user      @relation("friendship_friend_idTouser", fields: [friend_id], references: [user_id], map: "Friendship_friend_id_fkey")
+  user_friendship_user_idTouser   user      @relation("friendship_user_idTouser", fields: [user_id], references: [user_id], map: "Friendship_user_id_fkey")
+
+  @@id([user_id, friend_id])
+  @@index([friend_id], map: "Friendship_friend_id_fkey")
+}
+
+model group {
+  group_id           Int                  @id @default(autoincrement())
+  group_name         String
+  max_members        Int
+  created_by         Int
+  created_at         DateTime             @default(now())
+  join_code          String?              @unique
+  availability       availability[]
+  notification       notification[]
+  user               user                 @relation(fields: [created_by], references: [user_id], map: "Group_created_by_fkey")
+  groupmember        groupmember[]
+  scheduled_activity scheduled_activity[]
+
+  @@index([created_by], map: "Group_created_by_fkey")
+}
+
+model groupmember {
+  user_id    Int
+  group_id   Int
+  role       String?
+  created_at DateTime @default(now())
+  group      group    @relation(fields: [group_id], references: [group_id], onDelete: Cascade, map: "GroupMember_group_id_fkey")
+  user       user     @relation(fields: [user_id], references: [user_id], map: "GroupMember_user_id_fkey")
+
+  @@id([user_id, group_id])
+  @@index([group_id], map: "GroupMember_group_id_fkey")
+}
+
+model notification {
+  notification_id Int      @id @default(autoincrement())
+  user_id         Int
+  group_id        Int
+  message         String
+  is_read         Boolean  @default(false)
+  created_at      DateTime @default(now())
+  user            user     @relation(fields: [user_id], references: [user_id], map: "Notification_user_id_fkey")
+  group           group    @relation(fields: [group_id], references: [group_id], map: "Notification_group_id_fkey")
+
+  @@index([user_id], map: "Notification_user_id_fkey")
+  @@index([group_id], map: "Notification_group_id_fkey")
+}
+
+model user {
+  user_id                               Int                  @id @default(autoincrement())
+  email                                 String               @unique(map: "User_email_key")
+  password                              String
+  name                                  String
+  created_at                            DateTime             @default(now())
+  profile_image                         String?              @db.LongText
+  availability                          availability[]
+  budget                                budget[]
+  friendship_friendship_friend_idTouser friendship[]         @relation("friendship_friend_idTouser")
+  friendship_friendship_user_idTouser   friendship[]         @relation("friendship_user_idTouser")
+  notification                          notification[]
+  group                                 group[]
+  groupmember                           groupmember[]
+  useractivity                          useractivity[]
+  scheduled_activity                    scheduled_activity[]
+}
+
+model useractivity {
+  user_id          Int
+  activity_id      Int
+  preference_level Int
+  activity         activity @relation(fields: [activity_id], references: [activity_id], map: "UserActivity_activity_id_fkey")
+  user             user     @relation(fields: [user_id], references: [user_id], map: "UserActivity_user_id_fkey")
+
+  @@id([user_id, activity_id])
+  @@index([activity_id], map: "UserActivity_activity_id_fkey")
+}
+
+model scheduled_activity {
+  scheduled_id   Int      @id @default(autoincrement())
+  group_id       Int
+  activity_id    Int
+  start_datetime DateTime
+  end_datetime   DateTime
+  status         String?  @db.VarChar(191)
+  created_at     DateTime @default(now())
+  created_by     Int
+  group          group    @relation(fields: [group_id], references: [group_id], onDelete: Cascade)
+  activity       activity @relation(fields: [activity_id], references: [activity_id])
+  user           user     @relation(fields: [created_by], references: [user_id])
+
+  @@index([group_id])
+  @@index([activity_id])
+  @@index([created_by])
+}

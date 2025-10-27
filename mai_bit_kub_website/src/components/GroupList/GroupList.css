@@ -1,0 +1,420 @@
+.group-list-container {
+    background-color: rgba(234, 91, 111, 0.16);
+    backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 20px;
+    min-width: 250px;
+    height: calc(100vh - 80px - 21px - 80px - 10px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ea5b6f80 #ffffff20;
+    cursor: pointer;
+    transition: background-color 1s, transform 1s, opacity 1s cubic-bezier(0.4, 0, 0.2, 1), width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    position: relative;
+}
+
+.group-list-container:hover {
+    background-color: rgba(234, 91, 111, 0.50);
+    transform: scale(1.01);
+}
+
+.group-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.group-list-container::-webkit-scrollbar-track {
+    background: #ffffff10;
+    border-radius: 4px;
+}
+
+.group-list-container::-webkit-scrollbar-thumb {
+    background: #ea5b6f80;
+    border-radius: 4px;
+}
+
+.group-list-container h2 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.groups-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.group-item {
+    background-color: rgba(255, 251, 222, 0.2);
+    padding: 15px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.group-item:hover {
+    background-color: rgba(234, 91, 111, 0.3);
+    transform: translateX(5px);
+}
+
+.group-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.group-name {
+    color: white;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.member-count {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+.no-groups {
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
+.generate-code-btn {
+    padding: 8px 14px;
+    background: rgba(107, 127, 234, 0.8);
+    backdrop-filter: blur(10px);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    align-self: stretch;
+    box-shadow: 0 3px 12px rgba(107, 127, 234, 0.2);
+    letter-spacing: 0.3px;
+}
+
+.generate-code-btn:hover {
+    background: rgba(107, 127, 234, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(107, 127, 234, 0.4);
+}
+
+.generate-code-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(107, 127, 234, 0.3);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: rgba(107, 127, 234, 0.12);
+    backdrop-filter: blur(20px);
+    padding: 35px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px;
+    color: white;
+    border: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content h2 {
+    margin: 0 0 25px 0;
+    text-align: center;
+    color: #6B7FEA;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.code-display {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    letter-spacing: 0.3em;
+    color: #6B7FEA;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.code-instruction {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.modal-buttons { 
+    display: flex; 
+    gap: 12px; 
+    justify-content: center;
+}
+
+.modal-buttons button { 
+    padding: 12px 30px; 
+    border: none; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.modal-buttons button:first-child {
+    background: linear-gradient(135deg, #6B7FEA, #7f8fff);
+    color: white;
+    box-shadow: 0 4px 15px rgba(107, 127, 234, 0.4);
+}
+
+.modal-buttons button:first-child:hover { 
+    background: linear-gradient(135deg, #7f8fff, #8f9fff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(107, 127, 234, 0.6);
+}
+
+.modal-buttons button:last-child {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(107, 127, 234, 0.3);
+}
+
+.modal-buttons button:last-child:hover { 
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(107, 127, 234, 0.5);
+}
+.fab-button img {
+    width: 50px;
+    height: 50px;
+}
+/* Floating Action Button ใน GroupList */
+.group-list-container .fab-button {
+    position:absolute;
+    bottom: 50px;
+    right: 50px;
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    color: white;
+    border: none;
+    font-size: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    padding-bottom: 4px;
+    margin: 0;
+    line-height: 1;
+}
+
+.group-list-container .fab-button:hover {
+    transform: scale(1.1) rotate(90deg);
+    padding-bottom: 4px;
+    box-shadow: 0 6px 25px rgba(234, 91, 111, 0.6);
+    background: linear-gradient(135deg, #ff6b7f, #ff7a8f);
+}
+
+.group-list-container .fab-button:active {
+    transform: scale(0.95) rotate(90deg);
+}
+
+
+/* FAB Menu ใน GroupList */
+
+
+.group-list-container .fab-menu {
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 99;
+    animation: fadeInUp 0.3s ease;
+    background-color: rgba(255, 251, 222, 0.5);
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.group-list-container .create-join{
+    position: absolute;
+    display: grid;
+    row-gap: 10px;
+    bottom: 80px;
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.group-list-container .fab-menu-item {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+    min-width: 250px;
+    backdrop-filter: blur(80px);
+    text-align: center;
+}
+
+.group-list-container .fab-menu-item.create {
+    background: rgba(234, 91, 111, 0.8);
+}
+
+.group-list-container .fab-menu-item.create:hover {
+    background: rgba(234, 91, 111, 1);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(234, 91, 111, 0.5);
+}
+
+.group-list-container .fab-menu-item.join {
+    background: rgba(127, 143, 255, 0.75);
+}
+
+.group-list-container .fab-menu-item.join:hover {
+    background: rgba(107, 127, 234, 1);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(107, 127, 234, 0.5);
+}
+
+/* Form Group Styles for Modal */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ff8fa3;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid rgba(234, 91, 111, 0.3);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #EA5B6F;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Create Modal Styles */
+.modal-content.create-modal {
+    background: rgba(234, 91, 111, 0.12);
+}
+
+.modal-content.create-modal h2 {
+    color: #EA5B6F;
+}
+
+.modal-content.create-modal .form-group label {
+    color: #ff8fa3;
+}
+
+.modal-content.create-modal .form-group input {
+    border: 2px solid rgba(234, 91, 111, 0.3);
+}
+
+.modal-content.create-modal .form-group input:focus {
+    border-color: #EA5B6F;
+}
+
+.modal-content.create-modal .modal-buttons button:first-child {
+    background: linear-gradient(135deg, #EA5B6F, #ff6b7f);
+    box-shadow: 0 4px 15px rgba(234, 91, 111, 0.4);
+}
+
+.modal-content.create-modal .modal-buttons button:first-child:hover {
+    background: linear-gradient(135deg, #ff6b7f, #ff7a8f);
+    box-shadow: 0 6px 20px rgba(234, 91, 111, 0.6);
+}
+
+/* Join Modal Styles */
+.modal-content.join-modal h2 {
+    color: #6B7FEA;
+}
+
+.modal-content.join-modal .form-group label {
+    color: #8fa3ff;
+}
+
+.modal-content.join-modal .form-group input {
+    border: 2px solid rgba(107, 127, 234, 0.3);
+}
+
+.modal-content.join-modal .form-group input:focus {
+    border-color: #6B7FEA;
+}

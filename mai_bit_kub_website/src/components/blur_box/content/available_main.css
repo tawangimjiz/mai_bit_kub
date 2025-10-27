@@ -1,0 +1,438 @@
+.react-calendar,
+.react-calendar__month-view__days__day,
+.react-calendar__tile {
+  font-family: 'Zen Maru Gothic', sans-serif !important;
+}
+/* ลบจุดหรือสัญลักษณ์ใด ๆ และจัดตัวอักษรตรงกลาง */
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;   /* ลบ underline หรือ decoration */
+  display: block;
+  text-align: center;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  color: white;
+  font-weight: bold;
+}
+
+
+
+/* ==========================
+   กล่องหลัก จัดตรงกลางหน้าจอ
+========================== */
+.display-calendar {
+  display: flex;
+  justify-content: center; /* กลางแนวนอน */
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* ==========================
+   Layout 3 คอลัมน์: เดือน | วัน | เวลา
+========================== */
+.calendar-layout {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  height: 450px;           /* ความสูงชัดเจน */
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* ==========================
+   คอลัมน์เดือน + ปุ่ม View Availability
+========================== */
+.month-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 180px;
+}
+
+/* ==========================
+   View Availability Button - ใต้เดือน
+========================== */
+.view-availability-container {
+  width: 100%;
+  position: relative;
+  z-index: 100;
+}
+
+.view-availability-btn {
+  padding: 12px 16px;
+  background: rgba(234, 91, 111, 0.3);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.view-availability-btn:hover {
+  background: rgba(234, 91, 111, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.view-availability-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: slideDown 0.2s ease;
+  z-index: 1000;
+  min-width: 200px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.view-availability-dropdown .dropdown-header {
+  padding: 12px 16px;
+  background: rgba(234, 91, 111, 0.1);
+  font-weight: bold;
+  color: #EA5B6F;
+  border-bottom: 1px solid rgba(234, 91, 111, 0.2);
+}
+
+.view-availability-dropdown .dropdown-group-item {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #333;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.view-availability-dropdown .dropdown-group-item:last-child {
+  border-bottom: none;
+}
+
+.view-availability-dropdown .dropdown-group-item:hover {
+  background: rgba(234, 91, 111, 0.1);
+}
+
+.view-availability-dropdown .group-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.view-availability-dropdown .group-members {
+  font-size: 0.85em;
+  color: #666;
+  background: rgba(234, 91, 111, 0.1);
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.view-availability-dropdown .dropdown-no-groups {
+  padding: 16px;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* ==========================
+   แถบเดือนซ้าย
+========================== */
+.month-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  background-color: rgba(234, 91, 111, 0.16);
+  padding: 0px;
+  height: fit-content;
+}
+
+/* ปุ่มเลื่อนเดือน */
+.arrow-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  margin: 6px 0;
+  /* transition: 0.2s; */
+  width: 100%;
+}
+
+/* ชื่อเดือน */
+.month-name {
+  margin: 12px 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+/* ==========================
+   ปฏิทินวันตรงกลาง
+========================== */
+.group-selector {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.group-selector-header {
+  color: white;
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+.groups-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.groups-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.groups-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.groups-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.group-select-item {
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.group-select-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.group-select-item.selected {
+  background-color: #ff647c;
+}
+
+.no-groups {
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: 0.5rem;
+  font-style: italic;
+}
+
+.select-day-text {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding: 1rem;
+  font-style: italic;
+}
+
+.save-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.save-button {
+  padding: 0.75rem 2rem;
+  background-color: #ff647c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.save-button:hover {
+  background-color: #ff4f6b;
+}
+
+.calendar-container {
+  flex: 1;
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  background-color: transparent;
+  padding: 0px;          /* ลด padding */
+  overflow-y: auto;       /* scroll ของวันเอง */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* อยู่บนสุด */
+  height: auto;           /* สูงเต็ม container */
+}
+
+/* ลบพื้นหลัง react-calendar */
+.react-calendar {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* ช่องวัน */
+.react-calendar__tile {
+  width: 50px;
+  height: 50px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  transition: 0.2s;
+}
+
+/* วันที่ active ปกติ */
+.react-calendar__tile--active {
+  background: rgba(234, 91, 111, 0.5) !important;
+  color: white !important;
+  border-radius: 24px;
+}
+
+/* วันปัจจุบัน */
+.react-calendar__tile--now {
+  background: #FF894F;
+  color: white;
+  border-radius: 24px;
+}
+
+/* วันปัจจุบัน + เลือกเวลา */
+.react-calendar__tile--now.selected-day {
+  background: rgba(234, 91, 111, 0.5);
+  color: white;
+}
+
+/* วันมีเวลาเลือกแล้ว */
+.react-calendar__tile.selected-day {
+  background: rgba(234, 91, 111, 0.5);
+  color: white;
+  border-radius: 24px;
+}
+
+.react-calendar__tile:enabled:hover {
+  background: rgba(234, 91, 111, 0.3) !important;
+  border-radius: 24px;
+}
+
+/* ซ่อน navigation bar ของ react-calendar */
+.react-calendar__navigation {
+  display: none !important;
+}
+
+/* ==========================
+   แถบเวลา ขวา
+========================== */
+.time-selector {
+  width: 150px;
+  height: 100%;
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  background-color: rgba(234, 91, 111, 0.16);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: height 0.3s; /* smooth animation */
+
+}
+
+.time-selector.auto-height {
+  height: auto; /* ก่อนเลือกวัน */
+}
+
+.time-selector.full-height {
+  height: 100%; /* หลังเลือกวัน */
+}
+
+.time-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;       
+  width: 100%;
+  flex: 1; /* fill ความสูงของ time-selector */
+}
+
+/* แต่ละช่วงเวลา */
+.time-slot {
+  padding: 6px;
+  border-radius: 8px;
+  background-color: rgba(255,255,255,0.1);
+  color: 77BEF0;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;  /* สำหรับ indicator */
+}
+
+.time-slot.existing {
+  background-color: rgba(119, 190, 240, 0.3);  /* สีฟ้าอ่อนๆ */
+  border: 1px solid #77BEF0;
+}
+
+.time-slot.existing::after {
+  content: '✓';
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  font-size: 12px;
+  color: #77BEF0;
+}
+
+.time-slot:hover {
+  background-color: rgba(234, 91, 111, 0.3);
+}
+
+.time-slot.selected {
+  background-color: rgba(234, 91, 111, 0.5);
+  color: white;
+}
+
+/* วันที่เลือกเวลาแล้ว */
+.time-date {
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+/* แยกแต่ละบล็อคเวลา */
+.time-block {
+  margin-bottom: 16px;
+  width: 100%;
+}

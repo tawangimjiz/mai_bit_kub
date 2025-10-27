@@ -1,0 +1,23 @@
+h1{
+    margin-top: 68px;
+    margin-left: 292px;
+    margin-bottom: 0px;
+    font-size: 132px;
+    font-weight: bold;
+}
+p{
+    width: 564px;
+    height: 184px;
+    font-size: 24px;
+    margin-left: 292px;
+    padding-top: 0px;
+    font-weight: 500;
+}
+.navigate-to{
+    position: relative;
+    display: flex;
+    margin-left: 291px;
+}
+.SIGN-UP{
+    margin-left: 100px;
+}
