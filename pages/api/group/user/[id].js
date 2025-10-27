@@ -1,6 +1,13 @@
 import prisma from '../../../../lib/prisma';
+import cors from '../../middleware/cors';
 
 export default async function handler(req, res) {
+    // Enable CORS using the middleware
+    const shouldReturn = await cors(req, res);
+    if (shouldReturn) {
+        return;
+    }
+
     if (req.method === 'GET') {
         try {
             const userId = parseInt(req.query.id);

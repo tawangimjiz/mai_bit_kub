@@ -34,20 +34,10 @@ function serializeUser(user) {
 }
 
 export default async function handler(req, res) {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-
-  // Handle preflight request
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
+  // Enable CORS using the middleware
+  const shouldReturn = await cors(req, res);
+  if (shouldReturn) {
     return;
-  }
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
   }
 
   try {

@@ -86,14 +86,14 @@ function Activity() {
   async function addUserActivity(activityName) {
     try {
       // 1️⃣ ดึง activity_id จากชื่อกิจกรรม
-      const resAct = await fetch(`/api/activity/by-name?name=${encodeURIComponent(activityName)}`);
+      const resAct = await fetch(`http://localhost:3000/api/activity/by-name?name=${encodeURIComponent(activityName)}`);
       if (!resAct.ok) throw new Error(`Activity API error: ${resAct.status}`);
   let activity = await resAct.json();
 
       // If not found, try some common name variants (case variants) before giving up
       async function fetchByNameVariant(name) {
         try {
-          const r = await fetch(`/api/activity/by-name?name=${encodeURIComponent(name)}`);
+          const r = await fetch(`http://localhost:3000/api/activity/by-name?name=${encodeURIComponent(name)}`);
           if (!r.ok) return null;
           const a = await r.json();
           return a;
@@ -206,7 +206,7 @@ function Activity() {
       const userId = localStorage.getItem('userId');
       if (!userId) return;
       try {
-        const res = await fetch(`/api/activity/useractivity?userId=${userId}`);
+        const res = await fetch(`http://localhost:3000/api/activity/useractivity?userId=${userId}`);
         if (!res.ok) return;
         const data = await res.json();
         const names = data.map(u => u.activity?.name).filter(Boolean);
@@ -231,7 +231,7 @@ function Activity() {
       try {
         const uid = localStorage.getItem('userId');
         if (!uid) return;
-        const res = await fetch(`/api/budget`);
+        const res = await fetch(`http://localhost:3000/api/budget`);
         if (!res.ok) return;
         const all = await res.json();
         const mine = all.find(b => String(b.user_id) === String(uid));
@@ -259,7 +259,7 @@ function Activity() {
         const costs = {};
         await Promise.all(names.map(async (n) => {
           try {
-            const r = await fetch(`/api/activity/by-name?name=${encodeURIComponent(n)}`);
+            const r = await fetch(`http://localhost:3000/api/activity/by-name?name=${encodeURIComponent(n)}`);
             if (!r.ok) return;
             const a = await r.json();
             costs[n] = a?.min_cost != null ? Number(a.min_cost) : null;

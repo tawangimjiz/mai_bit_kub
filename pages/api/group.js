@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import cors from './middleware/cors';
 const prisma = new PrismaClient();
 
 // helper: serialize group
@@ -32,14 +33,10 @@ function generateJoinCode() {
 }
 
 export default async function handler(req, res) {
-  // --- CORS headers ---
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  // --- Preflight request ---
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
+  // Enable CORS using the middleware
+  const shouldReturn = await cors(req, res);
+  if (shouldReturn) {
+    return;
   }
 
   try {

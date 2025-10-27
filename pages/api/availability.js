@@ -1,16 +1,11 @@
 import { PrismaClient } from "@prisma/client";
+import cors from './middleware/cors';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-  // --- CORS headers ---
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-
-  // --- Preflight request ---
-  if (req.method === "OPTIONS") {
-    res.status(200).end();
+  // Enable CORS using the middleware
+  const shouldReturn = await cors(req, res);
+  if (shouldReturn) {
     return;
   }
 

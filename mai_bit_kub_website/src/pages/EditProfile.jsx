@@ -32,7 +32,7 @@ function EditProfile() {
                 }
 
                 console.log('Fetching user data for ID:', userId);
-                const response = await fetch(`/api/user/${userId}`, {
+                const response = await fetch(`http://localhost:3000/api/user/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type': 'application/json'
@@ -145,7 +145,7 @@ function EditProfile() {
 
         try {
             const userId = localStorage.getItem('userId');
-            const response = await fetch(`/api/user/${userId}`, {
+            const response = await fetch(`http://localhost:3000/api/user/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

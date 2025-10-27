@@ -249,7 +249,7 @@ function GroupAvailability() {
                   </p>
                 </div>
                 <div className="activity-meta">
-                  <span className="scheduled-by">Scheduled by: {scheduled.creator.name}</span>
+                  <span className="scheduled-by">Scheduled by: {scheduled.user?.name || 'Unknown'}</span>
                 </div>
               </div>
             ))}

@@ -27,7 +27,7 @@ async function handler(req, res) {
           include: {
             activity: true,
             group: true,
-            creator: true
+            user: true
           }
         });
         console.log('Created activity:', scheduledActivity);
@@ -77,7 +77,7 @@ async function handler(req, res) {
         include: {
           activity: true,
           group: true,
-          creator: {
+          user: {
             select: {
               name: true,
               email: true
