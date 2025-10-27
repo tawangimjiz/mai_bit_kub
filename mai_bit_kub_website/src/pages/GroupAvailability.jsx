@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./GroupAvailability.css";
 import { toast } from 'react-toastify';
+import { API_URL } from '../config';
+import "./GroupAvailability.css";
 
 function GroupAvailability() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function GroupAvailability() {
   const fetchGroupAvailability = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3000/api/find_availability?groupId=${groupId}`, {
+      const response = await fetch(`${API_URL}/api/find_availability?groupId=${groupId}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -99,7 +100,7 @@ function GroupAvailability() {
 
   const fetchScheduledActivities = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/scheduled-activities?groupId=${groupId}`, {
+      const response = await fetch(`${API_URL}/api/scheduled-activities?groupId=${groupId}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -135,7 +136,7 @@ function GroupAvailability() {
     try {
       console.log('Opening modal for time slot:', timeSlot);
       setSelectedTimeSlot(timeSlot);
-      const response = await fetch(`http://localhost:3000/api/recommend-activities?groupId=${groupId}`, {
+      const response = await fetch(`${API_URL}/api/recommend-activities?groupId=${groupId}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -179,7 +180,7 @@ function GroupAvailability() {
       };
       console.log('Sending data:', requestData);
       
-      const response = await fetch('http://localhost:3000/api/scheduled-activities', {
+      const response = await fetch(`${API_URL}/api/scheduled-activities`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

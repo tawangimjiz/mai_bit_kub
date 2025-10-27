@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { API_URL } from '../config';
 import './EditProfile.css';
 import defaultProfileImage from '../assets/profile_icon_main.png';
 
@@ -32,7 +33,7 @@ function EditProfile() {
                 }
 
                 console.log('Fetching user data for ID:', userId);
-                const response = await fetch(`http://localhost:3000/api/user/${userId}`, {
+                const response = await fetch(`${API_URL}/api/user/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type': 'application/json'
@@ -145,7 +146,7 @@ function EditProfile() {
 
         try {
             const userId = localStorage.getItem('userId');
-            const response = await fetch(`http://localhost:3000/api/user/${userId}`, {
+            const response = await fetch(`${API_URL}/api/user/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

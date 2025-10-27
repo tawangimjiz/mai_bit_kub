@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "./available_main.css";
 import { toast } from 'react-toastify';
+import { API_URL } from '../../../config';
+import "./available_main.css";
 
 function Available() {
   const navigate = useNavigate();
@@ -111,7 +112,7 @@ function Available() {
     if (!userId || !groupId) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/availability?userId=${userId}&groupId=${groupId}`, {
+      const response = await fetch(`${API_URL}/api/availability?userId=${userId}&groupId=${groupId}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json'
@@ -135,7 +136,7 @@ function Available() {
 
     const fetchGroups = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/group/user/${userId}`, {
+        const response = await fetch(`${API_URL}/api/group/user/${userId}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json'
@@ -173,7 +174,7 @@ function Available() {
   // ตรวจสอบเวลาที่ซ้ำกัน
   const checkOverlap = async (userId, groupId, startTime, endTime) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/availability?userId=${userId}&groupId=${groupId}`);
+      const response = await fetch(`${API_URL}/api/availability?userId=${userId}&groupId=${groupId}`);
       if (!response.ok) throw new Error('Failed to check availability');
       
       const existingAvailabilities = await response.json();
@@ -305,7 +306,7 @@ function Available() {
 
         if (isOverlap) continue; // ข้ามการบันทึกถ้าซ้ำ
 
-        const response = await fetch('http://localhost:3000/api/availability', {
+        const response = await fetch(`${API_URL}/api/availability`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

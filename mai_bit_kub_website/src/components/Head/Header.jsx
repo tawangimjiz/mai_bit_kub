@@ -1,6 +1,7 @@
-import './Header.css'
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { API_URL } from '../../config';
+import './Header.css'
 
 import menu_first from '../../assets/menu.png'
 import menu_second from '../../assets/menu_second.png'
@@ -46,7 +47,7 @@ function Header(){
             if (!userId) return;
 
             try {
-                const response = await fetch(`http://localhost:3000/api/notifications?userId=${userId}`, {
+                const response = await fetch(`${API_URL}/api/notifications?userId=${userId}`, {
                     credentials: 'include'
                 });
                 if (response.ok) {
@@ -74,7 +75,7 @@ function Header(){
             if (!userId) return;
 
             try {
-                const response = await fetch(`http://localhost:3000/api/group/user/${userId}`);
+                const response = await fetch(`${API_URL}/api/group/user/${userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setUserGroups(data || []);
@@ -100,7 +101,7 @@ function Header(){
     // Handle read notification
     const handleNotificationClick = async (notificationId) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/notifications`, {
+            const response = await fetch(`${API_URL}/api/notifications`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -167,7 +168,7 @@ function Header(){
                 try {
                     const userId = localStorage.getItem('userId');
                     if (userId) {
-                        const response = await fetch(`http://localhost:3000/api/user/${userId}`);
+                        const response = await fetch(`${API_URL}/api/user/${userId}`);
                         if (response.ok) {
                             const userData = await response.json();
                             setProfileImage(userData.profile_image);
@@ -225,7 +226,7 @@ function Header(){
                                             e.stopPropagation();
                                             const userId = localStorage.getItem('userId');
                                             fetch(
-                                                `http://localhost:3000/api/notifications?userId=${userId}`,
+                                                `${API_URL}/api/notifications?userId=${userId}`,
                                                 {
                                                     method: 'DELETE',
                                                     credentials: 'include'

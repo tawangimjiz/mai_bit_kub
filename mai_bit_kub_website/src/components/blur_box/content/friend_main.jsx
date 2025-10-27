@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react"
+import { toast } from 'react-toastify'
+import { API_URL } from '../../../config'
 import "./friend_main.css"
 import Profile_friend from "../../../assets/profile_icon_friend.png"
 import Add_friend from "../../../assets/add_friend.png"
 import Default_profile from "../../../assets/profile_icon_main.png"
-import { useState, useEffect } from "react"
-import { toast } from 'react-toastify'
 
 
 function Friend(){
@@ -17,7 +18,7 @@ function Friend(){
             
             try {
                 // ดึงข้อมูลสมาชิกในกลุ่ม
-                const response = await fetch(`http://localhost:3000/api/groupmember?groupId=${groupId}`, {
+                const response = await fetch(`${API_URL}/api/groupmember?groupId=${groupId}`, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json'

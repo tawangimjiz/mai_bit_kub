@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { API_URL } from '../config';
 import "./SignIn.css";
 import logo from "../assets/logo_mai_bit_kub.png";
 
@@ -18,7 +19,7 @@ function SignIn() {
         const loadingToast = toast.loading("Signing in...");
 
         try {
-            const res = await fetch("http://localhost:3000/api/login", {
+            const res = await fetch(`${API_URL}/api/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: username, password }),

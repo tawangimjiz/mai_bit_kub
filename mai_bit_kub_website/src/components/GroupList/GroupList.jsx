@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { toast } from 'react-toastify';
+import { API_URL } from '../../config';
 import './GroupList.css';
 import Add_icon from '../../assets/add_icon.png';
 import Bin_icon from '../../assets/bin_icon.png';
@@ -27,7 +28,7 @@ function GroupList() {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/api/group/user/${userId}`, {
+            const response = await fetch(`${API_URL}/api/group/user/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json'
@@ -52,7 +53,7 @@ function GroupList() {
     const handleGenerateCode = async (groupId) => {
         try {
             console.log('Generating code for group:', groupId, 'user:', userId);
-            const res = await fetch('http://localhost:3000/api/group/joincode', {
+            const res = await fetch(`${API_URL}/api/group/joincode`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -120,7 +121,7 @@ function GroupList() {
                 return;
             }
 
-            const res = await fetch('http://localhost:3000/api/group', {
+            const res = await fetch(`${API_URL}/api/group`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -152,7 +153,7 @@ function GroupList() {
                 return;
             }
 
-            const res = await fetch('http://localhost:3000/api/group/joincode', {
+            const res = await fetch(`${API_URL}/api/group/joincode`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({

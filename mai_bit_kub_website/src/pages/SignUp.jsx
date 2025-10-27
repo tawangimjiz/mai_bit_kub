@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { API_URL } from '../config';
 import "./SignUp.css";
 import logo from "../assets/logo_mai_bit_kub.png";
 
@@ -44,7 +45,7 @@ export default function SignUp() {
         }
 
         try {
-            const res = await fetch("http://localhost:3000/api/user", {
+            const res = await fetch(`${API_URL}/api/user`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { API_URL } from '../../../config';
 import "./budget_main.css";
 import Budget_main from "../../../assets/budget_icon.png";
 
@@ -30,7 +31,7 @@ function Budget() {
         }
         
         console.log('Loading budget for userId:', id);
-        const res = await fetch(`http://localhost:3000/api/budget`);
+        const res = await fetch(`${API_URL}/api/budget`);
         if (!res.ok) {
           console.log('Failed to fetch budget, status:', res.status);
           return;
@@ -111,7 +112,7 @@ function Budget() {
     try {
       const method = budgetId ? 'PUT' : 'POST';
       const body = budgetId ? { budget_id: budgetId, min_budget: min, max_budget: max } : { user_id: userId, min_budget: min, max_budget: max };
-      const res = await fetch(`http://localhost:3000/api/budget`, {
+      const res = await fetch(`${API_URL}/api/budget`, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

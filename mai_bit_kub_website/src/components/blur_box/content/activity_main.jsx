@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { API_URL } from '../../../config';
 import "./activity_main.css";
 
 import Create_icon from "../../../assets/create.png";
@@ -86,14 +87,14 @@ function Activity() {
   async function addUserActivity(activityName) {
     try {
       // 1️⃣ ดึง activity_id จากชื่อกิจกรรม
-      const resAct = await fetch(`http://localhost:3000/api/activity/by-name?name=${encodeURIComponent(activityName)}`);
+      const resAct = await fetch(`${API_URL}/api/activity/by-name?name=${encodeURIComponent(activityName)}`);
       if (!resAct.ok) throw new Error(`Activity API error: ${resAct.status}`);
   let activity = await resAct.json();
 
       // If not found, try some common name variants (case variants) before giving up
       async function fetchByNameVariant(name) {
         try {
-          const r = await fetch(`http://localhost:3000/api/activity/by-name?name=${encodeURIComponent(name)}`);
+          const r = await fetch(`${API_URL}/api/activity/by-name?name=${encodeURIComponent(name)}`);
           if (!r.ok) return null;
           const a = await r.json();
           return a;
@@ -136,7 +137,7 @@ function Activity() {
       // 2️⃣ Toggle userActivity: create, or if exists (409) delete
       const userId = parseInt(localStorage.getItem('userId') || '1', 10);
 
-      const resUA = await fetch("http://localhost:3000/api/activity/useractivity", {
+      const resUA = await fetch(`${API_URL}/api/activity/useractivity`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -149,7 +150,7 @@ function Activity() {
       // If it already exists, toggle: delete the userActivity
         if (resUA.status === 409) {
         console.warn('UserActivity already exists for this user/activity — attempting to remove (toggle)');
-        const resDel = await fetch("http://localhost:3000/api/activity/useractivity", {
+        const resDel = await fetch(`${API_URL}/api/activity/useractivity`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ user_id: userId, activity_id: activity.activity_id }),
@@ -206,7 +207,7 @@ function Activity() {
       const userId = localStorage.getItem('userId');
       if (!userId) return;
       try {
-        const res = await fetch(`http://localhost:3000/api/activity/useractivity?userId=${userId}`);
+        const res = await fetch(`${API_URL}/api/activity/useractivity?userId=${userId}`);
         if (!res.ok) return;
         const data = await res.json();
         const names = data.map(u => u.activity?.name).filter(Boolean);
@@ -231,7 +232,7 @@ function Activity() {
       try {
         const uid = localStorage.getItem('userId');
         if (!uid) return;
-        const res = await fetch(`http://localhost:3000/api/budget`);
+        const res = await fetch(`${API_URL}/api/budget`);
         if (!res.ok) return;
         const all = await res.json();
         const mine = all.find(b => String(b.user_id) === String(uid));
@@ -259,7 +260,7 @@ function Activity() {
         const costs = {};
         await Promise.all(names.map(async (n) => {
           try {
-            const r = await fetch(`http://localhost:3000/api/activity/by-name?name=${encodeURIComponent(n)}`);
+            const r = await fetch(`${API_URL}/api/activity/by-name?name=${encodeURIComponent(n)}`);
             if (!r.ok) return;
             const a = await r.json();
             costs[n] = a?.min_cost != null ? Number(a.min_cost) : null;
